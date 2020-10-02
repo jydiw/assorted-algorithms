@@ -19,20 +19,12 @@ two abundant numbers.
 '''
 
 from itertools import count
-from common import divisors, primes
+from euler import divisors, primes
 
-def abundant_numbers():
-  i = 12
-  yield i
-  for i in count(13, 1):
-    if sum(divisors(i)) > i:
-      yield i
-
-# c = 1
-# for a in list(abundant_numbers()):
-#   print(a)
-#   c += 1
-#   if c > 5:
-#     break
-
-print([n for n in abundant_numbers()])
+def non_abundant_sums(n):
+  nas = 0
+  for i in range(1,n):
+    if sum(divisors(i)) <= i:
+      nas += 1
+      
+non_abundant_sums(30)

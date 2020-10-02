@@ -1,5 +1,6 @@
 from functools import reduce
 from itertools import combinations, count
+from math import floor, log10
 
 def prime_factors(n, include_n=False):
   pfs = [1]
@@ -56,4 +57,14 @@ def primes_below(n):
       break
   return pr
 
-divisors(13)
+
+def fibonaccis():
+  a, b = 0, 1
+  while True:
+    yield a
+    a, b = b, a+b
+
+def digits(n):
+  if n == 0:
+    n = 1
+  return floor(log10(abs(n))+1)
