@@ -20,6 +20,7 @@ def prime_factors(n, include_n=False):
           pfs.append(n)
     return pfs
 
+  
 def divisors(n, include_n=False):
   pfs = prime_factors(n, include_n=include_n)
   divs = [1]
@@ -34,20 +35,26 @@ def divisors(n, include_n=False):
       divs = [d for d in divs if d != n]
   return sorted(list(set(divs)))
 
+
 def primes():
-  nonprimes = {}                        # dictionary to hold nonprimes
-  yield 2                               # first prime number
-  for i in count(3, 2):                 # all primes after 2 are odd numbers
-    k = nonprimes.pop(i, None)          # try to pop from nonprimes
-    if k is None:                       # if k is prime
-      yield i                           # yield i
-      nonprimes[i*i] = i                       # add i*2 to nonprimes
-    else:                               # is k is not prime
-      x = k + i                         # add next multiple of i if it is odd
+  nonprimes = {}
+  yield 2
+  # all primes after 2 are odd numbers
+  for i in count(3, 2):
+    # try to pop from nonprimes
+    k = nonprimes.pop(i, None)  
+    # yield i if not in nonprimes
+    if k is None:
+      yield i
+      nonprimes[i*i] = i
+    # add next odd multiple of i
+    else:
+      x = k + i
       while x in nonprimes or x % 2 == 0:
         x += k
       nonprimes[x] = k
 
+      
 def primes_below(n):
   pr = []
   for p in primes():
@@ -63,6 +70,7 @@ def fibonaccis():
   while True:
     yield a
     a, b = b, a+b
+
 
 def digits(n):
   if n == 0:
