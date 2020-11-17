@@ -12,6 +12,7 @@ price	          float
 purchase_time	  datetime
 */
 
+-- begin cte
 WITH frequent AS (
   SELECT user_id
        , RANK() OVER (

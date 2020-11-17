@@ -9,10 +9,15 @@ Find the product abc.
 '''
 
 def pythagorean_triplet(s):
+  triplets = []
   for a in range(1, s):
     b = (s**2 - 2*a*s) // (2*s - 2*a)
+    if b < a:
+      continue
     c = s - a - b
     if (a**2 + b**2) == c**2:
-      return a * b * c
+      triplets.append((a,b,c))
+  return triplets
 
 %timeit pythagorean_triplet(1000)
+pythagorean_triplet(120)

@@ -2,6 +2,41 @@ from functools import reduce
 from itertools import combinations, count
 from math import floor, log10
 
+### GENERATORS ###
+
+def primes():
+  nonprimes = {}
+  yield 2
+  # all primes after 2 are odd numbers
+  for i in count(3, 2):
+    # try to pop from nonprimes
+    k = nonprimes.pop(i, None)
+    # yield i if not in nonprimes
+    if k is None:
+      yield i
+      nonprimes[i*i] = i
+    # add next odd multiple of i
+    else:
+      x = k + i
+      while x in nonprimes or x % 2 == 0:
+        x += k
+      nonprimes[x] = k
+
+
+def fibonaccis():
+  a, b = 0, 1
+  while True:
+    yield a
+    a, b = b, a+b
+
+
+def triangle_numbers():
+  for i in count(1, 1):
+    yield i * (i+1) / 2
+
+
+### FACTORIZATION UTILITIES ###
+
 def prime_factors(n, include_n=False):
   pfs = [1]
   f = 2
@@ -20,7 +55,7 @@ def prime_factors(n, include_n=False):
           pfs.append(n)
     return pfs
 
-  
+
 def divisors(n, include_n=False):
   pfs = prime_factors(n, include_n=include_n)
   divs = [1]
@@ -36,25 +71,8 @@ def divisors(n, include_n=False):
   return sorted(list(set(divs)))
 
 
-def primes():
-  nonprimes = {}
-  yield 2
-  # all primes after 2 are odd numbers
-  for i in count(3, 2):
-    # try to pop from nonprimes
-    k = nonprimes.pop(i, None)  
-    # yield i if not in nonprimes
-    if k is None:
-      yield i
-      nonprimes[i*i] = i
-    # add next odd multiple of i
-    else:
-      x = k + i
-      while x in nonprimes or x % 2 == 0:
-        x += k
-      nonprimes[x] = k
+### OTHER TOOLS ###
 
-      
 def primes_below(n):
   pr = []
   for p in primes():
@@ -65,14 +83,30 @@ def primes_below(n):
   return pr
 
 
-def fibonaccis():
-  a, b = 0, 1
-  while True:
-    yield a
-    a, b = b, a+b
+def primes_between(a, b):
+  pr = []
+  for p in primes():
+    if p > a:
+      if p < b:
+        pr.append(p)
+      else:
+        break
+  return pr
 
 
-def digits(n):
+def integer_digits(n):
   if n == 0:
     n = 1
   return floor(log10(abs(n))+1)
+
+
+def pythagorean_triplet(p):
+  triplets = []
+  for a in range(1, p//2 + 1):
+    b = (p**2 - 2*a*p) // (2*p - 2*a)
+    if b < a:
+      continue
+    c = p - a - b
+    if (a**2 + b**2) == c**2:
+      triplets.append((a,b,c))
+  return triplets

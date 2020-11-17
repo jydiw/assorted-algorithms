@@ -11,13 +11,15 @@ How many different ways can £2 be made using any number of coins?
 
 
 def coinfinder(target):
+  if target <= 0:
+    return int(target == 0)
   coins = [1, 2, 5, 10, 20, 50, 100, 200]
   coins = [c for c in coins if c <= target]
   values = [0] * (target+1)
   values[0] = 1
   for coin in coins[::-1]:
-    for i in range(coin, target+1, coin):
+    for i in range(coin, target+1):
       values[i] += values[i - coin]
-  return values
+  return values[-1]
 
-coinfinder(10)
+coinfinder(-1)
