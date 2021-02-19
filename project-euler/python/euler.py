@@ -32,7 +32,12 @@ def fibonaccis():
 
 def triangle_numbers():
   for i in count(1, 1):
-    yield i * (i+1) / 2
+    yield i * (i+1) // 2
+
+
+def pentagon_numbers():
+  for i in count(1, 1):
+    yield i * (3*i - 1) // 2
 
 
 ### FACTORIZATION UTILITIES ###
